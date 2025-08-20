@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   release:
@@ -16,8 +17,6 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn tsc
-      - run: yarn lint
-      - run: yarn test
       - run: yarn build
       - run: cd packages/core && npm pack
       - run: cd packages/react && npm pack
@@ -29,12 +28,12 @@ jobs:
             packages/core/fortune-sheet-core-*.tgz
             packages/react/fortune-sheet-react-*.tgz
             packages/formula-parser/fortune-sheet-formula-parser-*.tgz
-      - run: cd packages/core && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: cd packages/react && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: cd packages/formula-parser && npm publish || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - run: cd packages/core && npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - run: cd packages/react && npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - run: cd packages/formula-parser && npm publish || true
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

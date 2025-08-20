@@ -478,14 +478,16 @@ const Workbook = React.forwardRef<WorkbookInstance, Settings & AdditionalProps>(
           draftCtx.lang = mergedSettings.lang;
           draftCtx.allowEdit = mergedSettings.allowEdit;
           draftCtx.hooks = mergedSettings.hooks;
-          
+
           // Setup custom functions
           if (mergedSettings.customFunctions) {
-            Object.entries(mergedSettings.customFunctions).forEach(([name, fn]) => {
-              draftCtx.formulaCache.parser.setFunction(name, fn);
-            });
+            Object.entries(mergedSettings.customFunctions).forEach(
+              ([name, fn]) => {
+                draftCtx.formulaCache.parser.setFunction(name, fn);
+              }
+            );
           }
-          
+
           // draftCtx.fontList = mergedSettings.fontList;
           if (_.isEmpty(draftCtx.currentSheetId)) {
             initSheetIndex(draftCtx);
